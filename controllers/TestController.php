@@ -21,8 +21,9 @@ class TestController extends Controller
      */
     public function actionIndex()
     {
-        $product = (new Product())->getSingleProduct();
-        return $this->render('index', ['product' => $product]);
+
+        //$product = (new Product())->getSingleProduct();
+        return $this->render('index', ['test' => \Yii::$app->test->getTestProperty()]);
     }
 
 

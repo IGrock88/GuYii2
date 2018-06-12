@@ -3,45 +3,47 @@
 namespace app\models;
 
 use Yii;
-use yii\base\Model;
 
 /**
- * Product is the model behind the product.
+ * This is the model class for table "product".
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $price
+ * @property int $created_at
  */
-class Product extends Model
+class Product extends \yii\db\ActiveRecord
 {
-    public $id;
-    public $title;
-    public $category;
-    public $body;
-    public $price;
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'product';
+    }
 
     /**
-     * @return array customized attribute labels
+     * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function rules()
     {
         return [
-            'verifyCode' => 'Verification Code',
+            [['name', 'price', 'created_at'], 'required'],
+            [['created_at'], 'integer'],
+            [['name', 'price'], 'string', 'max' => 50],
         ];
     }
 
     /**
-     *
-     * get info about product
-     * @return $this
-     *
+     * {@inheritdoc}
      */
-
-    public function getSingleProduct()
+    public function attributeLabels()
     {
-        $this->id = 1;
-        $this->title = 'Test Product';
-        $this->category = 'test cat';
-        $this->body = 'test description';
-        $this->price = 100;
-        return $this;
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+            'price' => 'Price',
+            'created_at' => 'Created At',
+        ];
     }
-
-
 }

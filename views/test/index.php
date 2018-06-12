@@ -5,5 +5,12 @@
  */
 ?>
 <h1>Product</h1>
-<div><?= \yii\widgets\DetailView::widget(['model' => $product]) ?></div>
+<div><?php
+
+    //\yii\widgets\DetailView::widget(['model' => $product])
+    echo $test;
+
+
+
+    ?></div>
 
