@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'name',
                 'format' => 'html',
                 'value' => function($model){
-                    return Html::a($model->name, 'view?id=' . $model->id, ['data-pjax' => '0']);
+                    return Html::a($model->name, ['view', 'id' => $model->id], ['data-pjax' => '0']);
                 }
             ],
             ['attribute' => 'price', 'value' => function($model){return '$' . $model->price;}],
