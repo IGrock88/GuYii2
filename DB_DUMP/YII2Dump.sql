@@ -4,7 +4,7 @@ USE `Yii2_GU`;
 --
 -- Host: localhost    Database: Yii2_GU
 -- ------------------------------------------------------
--- Server version	5.6.38
+-- Server version	5.5.5-10.0.34-MariaDB-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,7 +30,7 @@ CREATE TABLE `product` (
   `price` varchar(50) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'product 1','100','2018-06-12 12:12:54'),(2,'product 2','111','2018-06-12 12:12:54');
+INSERT INTO `product` VALUES (1,'product 1','100','2018-06-12 12:12:54'),(2,'product 2','111','2018-06-12 12:12:54'),(3,'<strong>test</strong>','150','2018-06-14 09:41:51'),(4,'test2','1000','2323-11-23 00:00:00'),(5,'<b>test3</b>','1231','2323-11-23 00:00:00'),(6,'test4 Product','1231','2323-11-23 00:00:00'),(7,'test5 P           ','1000','2023-12-31 23:12:00'),(8,'test5 P      ','1000','2323-11-23 00:00:00'),(9,'test5 P      ','1231','2323-11-23 00:00:00'),(10,'test5 P','1231','2323-11-23 00:00:00'),(11,'test product 3','124','2018-06-15 02:59:23'),(12,'test123','223','2018-06-15 03:07:28'),(13,'test5 P','333','2018-06-15 04:16:48'),(14,'test product 3','222','2018-06-15 04:23:01');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-12 18:18:44
+-- Dump completed on 2018-06-15 11:28:22

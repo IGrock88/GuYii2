@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price')->dropDownList(['111' => 'первый', '222' => 'второй', '333' => 'третий']) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
