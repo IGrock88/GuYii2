@@ -25,20 +25,7 @@ class m180619_014458_create_user extends Migration
             'updated_at' => $this->integer(),
         ]);
     }
-/*
- * CREATE TABLE `user` (
-`id` INT NOT NULL AUTO_INCREMENT,
-`username` VARCHAR(255) NOT NULL,
-`name` VARCHAR(255) NOT NULL,
-`surname` VARCHAR(255) NULL,
-`password_hash` VARCHAR(255) NOT NULL,
-`access_token` VARCHAR(255) NULL DEFAULT NULL,
-`auth_key` VARCHAR(255) NULL DEFAULT NULL,
-`created_at` INT NULL,
-`updated_at` INT NULL,
-PRIMARY KEY (`id`)
-);
- */
+
     /**
      * {@inheritdoc}
      */

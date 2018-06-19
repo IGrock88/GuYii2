@@ -19,14 +19,7 @@ class m180619_014520_create_access extends Migration
             'user_id' => $this->integer()->notNull()
         ]);
     }
-/*
- * CREATE TABLE `access` (
-`id` INT NOT NULL AUTO_INCREMENT,
-`event_id` INT NOT NULL,
-`user_id` INT NOT NULL,
-PRIMARY KEY (`id`)
-)
- */
+
     /**
      * {@inheritdoc}
      */

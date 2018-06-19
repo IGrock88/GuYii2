@@ -23,16 +23,7 @@ class m180619_014511_create_event extends Migration
             'created_at' => $this->integer()
         ]);
     }
-    /*
-     * CREATE TABLE `event` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `text` TEXT NOT NULL,
-    `dt` DATETIME NOT NULL,
-    `creator_id` INT NOT NULL,
-    `created_at` INT NULL,
-    PRIMARY KEY (`id`)
-    );
-     */
+
     /**
      * {@inheritdoc}
      */
