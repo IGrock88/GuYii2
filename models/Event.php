@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "event".
@@ -23,6 +24,14 @@ class Event extends \yii\db\ActiveRecord
     const RELATION_ACCESSES = 'accesses';
     const RELATION_CREATOR = 'creator';
     const RELATION_ACCESSES_USERS = 'accessedUsers';
+
+    public function behaviors()
+    {
+        return [
+            ['class' => TimestampBehavior::class, 'updatedAtAttribute' => false]
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
