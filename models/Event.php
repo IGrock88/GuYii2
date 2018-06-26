@@ -14,10 +14,15 @@ use Yii;
  * @property int $created_at
  *
  * @property Access[] $accesses
+ * @property User[] $accessedUsers
  * @property Users $creator
  */
 class Event extends \yii\db\ActiveRecord
 {
+
+    const RELATION_ACCESSES = 'accesses';
+    const RELATION_CREATOR = 'creator';
+    const RELATION_ACCESSES_USERS = 'accessedUsers';
     /**
      * {@inheritdoc}
      */
@@ -67,9 +72,13 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getCreator()
     {
-        return $this->hasOne(Users::className(), ['id' => 'creator_id']);
+        return $this->hasOne(User::className(), ['id' => 'creator_id']);
     }
 
+    public function getAccessedUsers()
+    {
+        return $this->hasMany(User::class, ['id' =>'user_id'])->via(self::RELATION_ACCESSES);
+    }
     /**
      * {@inheritdoc}
      * @return \app\models\query\EventQuery the active query used by this AR class.

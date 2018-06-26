@@ -22,6 +22,9 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
+    const RELATION_EVENTS = "events";
+    const RELATION_ACCESSES = 'accesses';
+
     /**
      * {@inheritdoc}
      */
