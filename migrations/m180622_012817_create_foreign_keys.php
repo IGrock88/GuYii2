@@ -13,9 +13,9 @@ class m180622_012817_create_foreign_keys extends Migration
      */
     public function safeUp()
     {
-        $this->addForeignKey('fx_access_user', 'access', ['user_id'], 'users', ['id']);
+        $this->addForeignKey('fx_access_user', 'access', ['user_id'], 'user', ['id']);
         $this->addForeignKey('fx_access_event', 'access', ['event_id'], 'event', ['id']);
-        $this->addForeignKey('fx_event_user', 'event', ['creator_id'], 'users', ['id']);
+        $this->addForeignKey('fx_event_user', 'event', ['creator_id'], 'user', ['id']);
     }
 
     /**

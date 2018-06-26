@@ -30,17 +30,17 @@ class TestController extends Controller
 
     public function actionInsert()
     {
-        Yii::$app->db->createCommand()->insert('users', [
+        Yii::$app->db->createCommand()->insert('user', [
             'username' => 'Jack1',
             'name' => 'Jack',
             'password_hash' => 'dsaasgasdasdf',
         ])->execute();
-        Yii::$app->db->createCommand()->insert('users', [
+        Yii::$app->db->createCommand()->insert('user', [
             'username' => 'Mike',
             'name' => 'Mike',
             'password_hash' => 'dsaasgasdasdf',
         ])->execute();
-        Yii::$app->db->createCommand()->insert('users', [
+        Yii::$app->db->createCommand()->insert('user', [
             'username' => 'Alex',
             'name' => 'Alex',
             'password_hash' => 'dsaasgasdasdf',

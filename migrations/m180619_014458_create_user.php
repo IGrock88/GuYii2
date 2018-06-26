@@ -7,7 +7,7 @@ use yii\db\Migration;
  */
 class m180619_014458_create_user extends Migration
 {
-    const TABLE_NAME = 'users';
+    const TABLE_NAME = 'user';
     /**
      * {@inheritdoc}
      */

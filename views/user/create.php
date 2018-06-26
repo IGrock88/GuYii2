@@ -2,15 +2,15 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Users */
 
-$this->title = 'Update Users: ' . $model->name;
+/* @var $this yii\web\View */
+/* @var $model app\models\User */
+
+$this->title = 'Create User';
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="users-update">
+<div class="user-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

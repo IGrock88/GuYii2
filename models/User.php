@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "users".
+ * This is the model class for table "user".
  *
  * @property int $id
  * @property string $username
@@ -20,14 +20,14 @@ use Yii;
  * @property Access[] $accesses
  * @property Event[] $events
  */
-class Users extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'users';
+        return 'user';
     }
 
     /**
@@ -78,10 +78,10 @@ class Users extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return \app\models\query\UsersQuery the active query used by this AR class.
+     * @return \app\models\query\UserQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \app\models\query\UsersQuery(get_called_class());
+        return new \app\models\query\UserQuery(get_called_class());
     }
 }
