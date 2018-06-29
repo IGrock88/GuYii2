@@ -5,7 +5,10 @@ namespace app\controllers;
 use Yii;
 use app\models\Event;
 use app\models\search\SearchEvent;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -20,6 +23,17 @@ class EventController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['my', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['my', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -29,17 +43,18 @@ class EventController extends Controller
         ];
     }
 
+
     /**
-     * Lists all Event models.
+     * Lists only user Event models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionMy()
     {
-        $searchModel = new SearchEvent();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Event::find()->byCreator(Yii::$app->user->id)
+        ]);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
+        return $this->render('my', [
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -52,8 +67,14 @@ class EventController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        if($model->creator_id !== Yii::$app->user->id){
+            throw new ForbiddenHttpException('access denied');
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -64,10 +85,12 @@ class EventController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Event();
+        $model = new Event(['creator_id' => Yii::$app->user->id]);
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', 'Событие создано');
+            return $this->redirect(['my']);
         }
 
         return $this->render('create', [
@@ -85,6 +108,10 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        if($model->creator_id !== Yii::$app->user->id){
+            throw new ForbiddenHttpException('access denied');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -104,9 +131,15 @@ class EventController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
-        return $this->redirect(['index']);
+        if($model->creator_id !== Yii::$app->user->id){
+            throw new ForbiddenHttpException('access denied');
+        }
+
+        $model->delete();
+        Yii::$app->session->setFlash('success', 'Удаление успешно');
+        return $this->redirect(['my']);
     }
 
     /**

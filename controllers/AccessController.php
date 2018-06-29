@@ -2,10 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\Event;
+use app\models\User;
 use Yii;
 use app\models\Access;
 use app\models\search\SearchAccess;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -20,6 +24,17 @@ class AccessController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -62,15 +77,26 @@ class AccessController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($eventId)
     {
-        $model = new Access();
+        $eventModel = Event::findOne($eventId);
+        $currentUser = Yii::$app->user->id;
+
+        if(!$eventModel || $eventModel->creator_id !== $currentUser){
+            throw new ForbiddenHttpException('access denied');
+        }
+
+        $users = User::find()->acceptedUsers($currentUser);
+
+        $model = new Access(['event_id' => $eventId]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('info', 'Доступ пользователю расшарен');
+            return $this->redirect(['event/my']);
         }
 
         return $this->render('create', [
+            'users' => $users,
             'model' => $model,
         ]);
     }

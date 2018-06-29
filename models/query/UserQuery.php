@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models\query;
+use app\models\User;
 
 /**
  * This is the ActiveQuery class for [[\app\models\User]].
@@ -30,5 +31,15 @@ class UserQuery extends \yii\db\ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+
+    public function acceptedUsers($idCurrentUser)
+    {
+        return $this
+            ->where(['<>', 'id', $idCurrentUser])
+            ->select('name')
+            ->indexBy('id')
+            ->column();
     }
 }

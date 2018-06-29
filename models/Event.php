@@ -50,7 +50,7 @@ class Event extends \yii\db\ActiveRecord
             [['text'], 'string'],
             [['dt'], 'safe'],
             [['creator_id', 'created_at'], 'integer'],
-            [['creator_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['creator_id' => 'id']],
+            [['creator_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['creator_id' => 'id']],
         ];
     }
 
@@ -62,9 +62,9 @@ class Event extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'text' => 'Text',
-            'dt' => 'Dt',
+            'dt' => 'Дата и время',
             'creator_id' => 'Creator ID',
-            'created_at' => 'Created At',
+            'created_at' => 'Дата создания события',
         ];
     }
 
