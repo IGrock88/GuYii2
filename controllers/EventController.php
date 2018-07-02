@@ -60,6 +60,21 @@ class EventController extends Controller
     }
 
     /**
+     * Lists only user Event models.
+     * @return mixed
+     */
+    public function actionShared()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Event::find()->byCreator(Yii::$app->user->id)->innerJoinWith(Event::RELATION_ACCESSES)
+        ]);
+
+        return $this->render('shared', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Displays a single Event model.
      * @param integer $id
      * @return mixed

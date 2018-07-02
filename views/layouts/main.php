@@ -40,7 +40,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Создать событие', 'url' => ['/event/create']],
-            ['label' => 'Мои событии', 'url' => ['/event/my']],
+            ['label' => 'Мои события', 'url' => ['/event/my']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

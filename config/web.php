@@ -54,6 +54,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'events' => 'event/my',
+                '<c:\w+>/<id:\d+>' => '<c>/view'
             ],
         ],
 

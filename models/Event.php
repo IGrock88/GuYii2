@@ -73,7 +73,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getAccesses()
     {
-        return $this->hasMany(Access::className(), ['event_id' => 'id']);
+        return $this->hasMany(Access::class, ['event_id' => 'id']);
     }
 
     /**
@@ -84,6 +84,9 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'creator_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getAccessedUsers()
     {
         return $this->hasMany(User::class, ['id' =>'user_id'])->via(self::RELATION_ACCESSES);
