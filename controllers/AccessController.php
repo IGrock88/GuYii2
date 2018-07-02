@@ -8,6 +8,7 @@ use Yii;
 use app\models\Access;
 use app\models\search\SearchAccess;
 use yii\filters\AccessControl;
+use Yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -39,6 +40,7 @@ class AccessController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'unshare-all' => ['POST'],
                 ],
             ],
         ];
@@ -92,13 +94,34 @@ class AccessController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('info', 'Доступ пользователю расшарен');
-            return $this->redirect(['event/my']);
+            return $this->redirect(['event/shared']);
         }
 
         return $this->render('create', [
             'users' => $users,
             'model' => $model,
         ]);
+    }
+
+
+    /**
+     * unshare event.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionDeleteAll($eventId)
+    {
+        $eventModel = Event::findOne($eventId);
+        $currentUser = Yii::$app->user->id;
+
+        if(!$eventModel || $eventModel->creator_id !== $currentUser){
+            throw new ForbiddenHttpException('access denied');
+        }
+
+        $eventModel->unlinkAll(Event::RELATION_ACCESSES_USERS, true);
+        Yii::$app->session->setFlash('success', 'Доступы удалены');
+
+        return $this->redirect(['event/shared']);
     }
 
     /**
@@ -128,11 +151,16 @@ class AccessController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($accessId)
     {
-        $this->findModel($id)->delete();
+        $accessModel = $this->findModel($accessId);
+        if($accessModel->event->creator_id == Yii::$app->user->id){
+            Yii::$app->session->setFlash('success', 'Доступ пользователю удален');
+            $accessModel->delete();
+        }
 
-        return $this->redirect(['index']);
+
+        return $this->redirect(['event/view', 'id' => $accessModel->event_id]);
     }
 
     /**

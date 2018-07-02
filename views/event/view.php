@@ -1,5 +1,6 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -35,5 +36,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
         ],
     ]) ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            'user.name',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{deleteOneShare}',
+                'buttons' => [
+                    'deleteOneShare' => function ($url, $model, $key) {
+                        return Html::a(\yii\bootstrap\Html::icon('minus-sign'), ['access/delete', 'accessId' => $model->id]
+                        ,
+                        [
+                            'data' => [
+                                'confirm' => 'Вы действительно хотите удалить доступ к событию?',
+                                'method' => 'post',
+                            ]
+                        ]);
+                    }
+                ]
+            ],
+        ]
+    ]); ?>
 
 </div>

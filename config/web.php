@@ -55,7 +55,8 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'events' => 'event/my',
-                '<c:\w+>/<id:\d+>' => '<c>/view'
+                '<c:[\w-]+>/<id:\d+>' => '<c>/view',
+                '<c:[\w-]+>/create/<eventId:\d+>' => '<c>/create'
             ],
         ],
 

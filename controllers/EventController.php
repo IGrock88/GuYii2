@@ -7,6 +7,7 @@ use app\models\Event;
 use app\models\search\SearchEvent;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -75,6 +76,22 @@ class EventController extends Controller
     }
 
     /**
+     * Lists only user Event models.
+     * @return mixed
+     */
+    public function actionAccessed()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Event::find()
+                ->innerJoinWith(Event::RELATION_ACCESSES)
+                ->where(['=', 'access.user_id', Yii::$app->user->id])
+        ]);
+
+        return $this->render('accessed', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    /**
      * Displays a single Event model.
      * @param integer $id
      * @return mixed
@@ -84,12 +101,18 @@ class EventController extends Controller
     {
         $model = $this->findModel($id);
 
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model->getAccesses()
+                ->innerJoin('user', 'access.user_id = user.id')
+        ]);
+
         if($model->creator_id !== Yii::$app->user->id){
             throw new ForbiddenHttpException('access denied');
         }
 
         return $this->render('view', [
             'model' => $model,
+            'dataProvider' => $dataProvider
         ]);
     }
 
@@ -129,7 +152,8 @@ class EventController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', 'Событие изменено');
+            return $this->redirect(['my']);
         }
 
         return $this->render('update', [

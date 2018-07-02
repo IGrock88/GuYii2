@@ -34,10 +34,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {unShareAll}',
+                'template' => '{view} {deleteAll}',
                 'buttons' => [
-                    'unShareAll' => function ($url, $model, $key) {
-                        return Html::a(\yii\bootstrap\Html::icon('minus-sign'), ['access/unShareAll', 'eventId' => $model->id]);
+                    'deleteAll' => function ($url, $model, $key) {
+                        return Html::a(\yii\bootstrap\Html::icon('minus-sign'), ['access/delete-all',
+                            'eventId' => $model->id],
+                            [
+                                    'data' => [
+                                        'confirm' => 'Вы действительно хотите удалить доступы к событию?',
+                                        'method' => 'post',
+                                    ]
+                            ]);
                     }
                 ]
             ],
